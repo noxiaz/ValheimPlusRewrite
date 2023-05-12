@@ -7,9 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ValheimPlusRewrite.Configurations;
 using ValheimPlusRewrite.Configurations.Helpers;
+using ValheimPlusRewrite.Functions.Menu;
+using ValheimPlusRewrite.Functions.Syncs;
 using ValheimPlusRewrite.Handlers;
-using ValheimPlusRewrite.UI;
 
 namespace ValheimPlusRewrite
 {
@@ -17,9 +19,11 @@ namespace ValheimPlusRewrite
     public class ValheimPlusPlugin : BaseUnityPlugin
     {
         public const string VERSION = "0.9.9.16";
+
+        internal static System.Timers.Timer mapSyncSaveTimer = new System.Timers.Timer(TimeSpan.FromMinutes(5).TotalMilliseconds);
         private static Harmony harmony = new Harmony("mod.valheim_plus");
 
-        internal static readonly string VPlusDataDirectoryPath = Path.Combine(Paths.BepInExRootPath, "vplus-data");
+        internal static string DataDirectoryPath { get; private set; } = Path.Combine(Paths.BepInExRootPath, "vplus-data");
         internal static ValheimPlusPlugin Instance { get; private set; }
 
         void Awake()
@@ -41,7 +45,18 @@ namespace ValheimPlusRewrite
             {
                 Log.LogInfo("Configuration file loaded succesfully.");
                 PatchAll();
-                VPlusMainMenu.Load();
+
+                if (!Directory.Exists(DataDirectoryPath))
+                {
+                    Directory.CreateDirectory(DataDirectoryPath);
+                }
+
+                //Map Sync Save Timer
+                if (ZNet.m_isServer && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+                {
+                    mapSyncSaveTimer.AutoReset = true;
+                    mapSyncSaveTimer.Elapsed += (sender, args) => MapSync.SaveMapDataToDisk();
+                }
             }
         }
 

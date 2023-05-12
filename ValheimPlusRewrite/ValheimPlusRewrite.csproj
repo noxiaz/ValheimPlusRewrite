@@ -377,11 +377,19 @@
     <Compile Include="Configurations\Sections\WardConfiguration.cs" />
     <Compile Include="Configurations\Sections\WindmillConfiguration.cs" />
     <Compile Include="Configurations\Sections\WorkbenchConfiguration.cs" />
+    <Compile Include="Extensions\GameObjectExtensions.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ZNetExtensions.cs" />
+    <Compile Include="Extensions\ZPackageExtensions.cs" />
+    <Compile Include="Functions\Menu\VPlusSettingEditor.cs" />
+    <Compile Include="Functions\Syncs\MapSync.cs" />
+    <Compile Include="Functions\Syncs\Models\MapRangeModel.cs" />
     <Compile Include="Handlers\CompatibilityHandler.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="UI\VPlusMainMenu.cs" />
+    <Compile Include="Functions\Menu\VPlusMainLogo.cs" />
     <Compile Include="Utilities\EmbeddedAsset.cs" />
+    <Compile Include="Utilities\Models\RpcDataModel.cs" />
+    <Compile Include="Utilities\RpcQueue.cs" />
     <Compile Include="ValheimPlusPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -401,9 +409,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\logo.png" />
-    <EmbeddedResource Include="Assets\ZapHosting.png" />
-    <EmbeddedResource Include="Assets\ZapHosting_hover.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
