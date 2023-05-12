@@ -7,4 +7,18 @@
         </ItemGroup>
         <ILRepack Parallel="true" DebugInfo="true" Internalize="true" InputAssemblies="@(InputAssemblies)" OutputFile="$(TargetPath)" TargetKind="SameAsPrimaryAssembly" LibraryPath="$(OutputPath)"/>
     </Target>
+	<Target Name="Copy" AfterTargets="ILRepack">
+		<Exec Command="copy /Y &quot;$(TargetDir)$(AssemblyName).dll&quot; &quot;$(ProjectDir)\..\..\Mods\$(AssemblyName).dll&quot;" />
+	</Target>
+	<Target Name="Copy" AfterTargets="ILRepack">
+		<Exec Command="copy /Y &quot;$(TargetDir)$(AssemblyName).dll&quot; &quot;$(GamePath)\Bepinex\plugins\&quot;" />
+	</Target>
+	<Target Name="Copy" AfterTargets="ILRepack">
+		<Exec Command="
+if $(ConfigurationName) == Debug del &quot;$(TargetPath).mdb&quot;
+if $(ConfigurationName) == Debug del &quot;$(GamePath)\Bepinex\plugins\$(AssemblyName).dll&quot;
+if $(ConfigurationName) == Debug (&quot;$(SolutionDir)libraries\pdb2mdb.exe&quot; &quot;$(TargetPath)&quot;)
+xcopy &quot;$(TargetDir)&quot; &quot;$(GamePath)\Bepinex\plugins\$(ProjectName)\&quot; /q /s /y /i
+				  " />
+	</Target>
 </Project>

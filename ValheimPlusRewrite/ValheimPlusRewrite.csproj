@@ -324,6 +324,65 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\Abstracts\BaseConfig.cs" />
+    <Compile Include="Configurations\Abstracts\ServerSyncConfig.cs" />
+    <Compile Include="Configurations\Attributes\LoadingOption.cs" />
+    <Compile Include="Configurations\Configuration.cs" />
+    <Compile Include="Configurations\Enums\LoadingMode.cs" />
+    <Compile Include="Configurations\Helpers\ConfigurationHelper.cs" />
+    <Compile Include="Configurations\Sections\AdvancedBuildingModeConfiguration.cs" />
+    <Compile Include="Configurations\Sections\AdvancedEditingModeConfiguration.cs" />
+    <Compile Include="Configurations\Sections\ArmorConfiguration.cs" />
+    <Compile Include="Configurations\Sections\BedConfiguration.cs" />
+    <Compile Include="Configurations\Sections\BeehiveConfiguration.cs" />
+    <Compile Include="Configurations\Sections\BrightnessConfiguration.cs" />
+    <Compile Include="Configurations\Sections\BuildingConfiguration.cs" />
+    <Compile Include="Configurations\Sections\CameraConfiguration.cs" />
+    <Compile Include="Configurations\Sections\ChatConfiguration.cs" />
+    <Compile Include="Configurations\Sections\CraftFromChestConfiguration.cs" />
+    <Compile Include="Configurations\Sections\DeconstructConfiguration.cs" />
+    <Compile Include="Configurations\Sections\DurabilityConfiguration.cs" />
+    <Compile Include="Configurations\Sections\ExperienceConfiguration.cs" />
+    <Compile Include="Configurations\Sections\FermenterConfiguration.cs" />
+    <Compile Include="Configurations\Sections\FireSourceConfiguration.cs" />
+    <Compile Include="Configurations\Sections\FirstPersonConfiguration.cs" />
+    <Compile Include="Configurations\Sections\FoodConfiguration.cs" />
+    <Compile Include="Configurations\Sections\FreePlacementRotationConfiguration.cs" />
+    <Compile Include="Configurations\Sections\FurnaceConfiguration.cs" />
+    <Compile Include="Configurations\Sections\GameClockConfiguration.cs" />
+    <Compile Include="Configurations\Sections\GameConfiguration.cs" />
+    <Compile Include="Configurations\Sections\GatherConfiguration.cs" />
+    <Compile Include="Configurations\Sections\GridAlignmentConfiguration.cs" />
+    <Compile Include="Configurations\Sections\HotkeyConfiguration.cs" />
+    <Compile Include="Configurations\Sections\HudConfiguration.cs" />
+    <Compile Include="Configurations\Sections\InventoryConfiguration.cs" />
+    <Compile Include="Configurations\Sections\ItemsConfiguration.cs" />
+    <Compile Include="Configurations\Sections\KilnConfiguration.cs" />
+    <Compile Include="Configurations\Sections\MapConfiguration.cs" />
+    <Compile Include="Configurations\Sections\MonsterProjectileConfiguration.cs" />
+    <Compile Include="Configurations\Sections\PickableConfiguration.cs" />
+    <Compile Include="Configurations\Sections\PlayerConfiguration.cs" />
+    <Compile Include="Configurations\Sections\PlayerProjectileConfiguration.cs" />
+    <Compile Include="Configurations\Sections\ServerConfiguration.cs" />
+    <Compile Include="Configurations\Sections\ShieldConfiguration.cs" />
+    <Compile Include="Configurations\Sections\SmelterConfiguration.cs" />
+    <Compile Include="Configurations\Sections\SpinningWheelConfiguration.cs" />
+    <Compile Include="Configurations\Sections\StaminaConfiguration.cs" />
+    <Compile Include="Configurations\Sections\StaminaUsageConfiguration.cs" />
+    <Compile Include="Configurations\Sections\StructuralIntegrityConfiguration.cs" />
+    <Compile Include="Configurations\Sections\TameableConfiguration.cs" />
+    <Compile Include="Configurations\Sections\TimeConfiguration.cs" />
+    <Compile Include="Configurations\Sections\ValheimPlusConfiguration.cs" />
+    <Compile Include="Configurations\Sections\WagonConfiguration.cs" />
+    <Compile Include="Configurations\Sections\WardConfiguration.cs" />
+    <Compile Include="Configurations\Sections\WindmillConfiguration.cs" />
+    <Compile Include="Configurations\Sections\WorkbenchConfiguration.cs" />
+    <Compile Include="Extensions\ZNetExtensions.cs" />
+    <Compile Include="Handlers\CompatibilityHandler.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="UI\VPlusMainMenu.cs" />
+    <Compile Include="Utilities\EmbeddedAsset.cs" />
+    <Compile Include="ValheimPlusPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -335,15 +394,20 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Assets\Bundles\map-pin-ui" />
+    <EmbeddedResource Include="Assets\Bundles\settings-ui" />
+    <None Include="Assets\valheim_plus.cfg" />
     <None Include="ILRepack.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\logo.png" />
+    <EmbeddedResource Include="Assets\ZapHosting.png" />
+    <EmbeddedResource Include="Assets\ZapHosting_hover.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
     </PropertyGroup>
-  </Target>
-  <Target Name="Copy" AfterTargets="ILRepack">
-    <Exec Command="copy /Y &quot;$(TargetDir)$(AssemblyName).dll&quot; &quot;$(ProjectDir)\..\..\Mods\$(AssemblyName).dll&quot;" />
   </Target>
 </Project>

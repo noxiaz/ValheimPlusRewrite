@@ -1,0 +1,15 @@
+﻿using ValheimPlusRewrite.Configurations.Abstracts;
+
+namespace ValheimPlusRewrite.Configurations.Sections
+{
+    public class CraftFromChestConfiguration : ServerSyncConfig
+    {
+        public float range { get; internal set; } = 20;
+        public bool disableCookingStation { get; internal set; } = false;
+        public bool checkFromWorkbench { get; internal set; } = true;
+        public bool ignorePrivateAreaCheck { get; internal set; } = false;
+        public int lookupInterval { get; internal set; } = 3;
+        public bool allowCraftingFromCarts { get; internal set; } = false;
+        public bool allowCraftingFromShips { get; internal set; } = false;
+    }
+}
