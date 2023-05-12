@@ -45,11 +45,11 @@ namespace ValheimPlusRewrite.Handlers.Menu
         {
             if (Input.GetKeyDown(KeyCode.F10))
             {
-                if (newStart == null && !VPlusSettingEditor.haveAddedModMenu)
+                if (newStart == null && !haveAddedModMenu)
                 {
                     bool FindAndAddSettings(Transform parent, Transform current)
                     {
-                        if (current.name == "Start game" && !VPlusSettingEditor.haveAddedModMenu)
+                        if (current.name == "Start game" && !haveAddedModMenu)
                         {
                             newStart = GameObject.Instantiate(current);
                             newStart.name = "V+ Settings";
@@ -64,9 +64,9 @@ namespace ValheimPlusRewrite.Handlers.Menu
                             GameObject.DestroyImmediate(newStart.gameObject.GetComponent<Button>());
                             Button newButton = newStart.gameObject.AddComponent<Button>();
                             newButton.transition = Selectable.Transition.Animation;
-                            newButton.onClick.AddListener(() => VPlusSettingEditor.Show());
+                            newButton.onClick.AddListener(() => Show());
 
-                            VPlusSettingEditor.haveAddedModMenu = true;
+                            haveAddedModMenu = true;
                             return true;
                         }
 
@@ -85,7 +85,7 @@ namespace ValheimPlusRewrite.Handlers.Menu
                 }
                 else
                 {
-                    VPlusSettingEditor.haveAddedModMenu = false;
+                    haveAddedModMenu = false;
                 }
             }
         }
