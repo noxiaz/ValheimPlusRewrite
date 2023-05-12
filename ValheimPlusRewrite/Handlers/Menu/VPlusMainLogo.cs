@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using ValheimPlusRewrite.Configurations;
 using ValheimPlusRewrite.Utilities;
 
-namespace ValheimPlusRewrite.Functions.Menu
+namespace ValheimPlusRewrite.Handlers.Menu
 {
     [HarmonyPatch]
     public static class VPlusMainLogo

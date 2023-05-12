@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ValheimPlusRewrite.Functions.Syncs.Models;
+using ValheimPlusRewrite.Handlers.Syncs.Models;
 
 namespace ValheimPlusRewrite
 {

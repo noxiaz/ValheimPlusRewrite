@@ -14,9 +14,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using ValheimPlusRewrite.Configurations;
 using ValheimPlusRewrite.Configurations.Helpers;
+using ValheimPlusRewrite.Handlers.Syncs;
 using ValheimPlusRewrite.Utilities;
 
-namespace ValheimPlusRewrite.Functions.Menu
+namespace ValheimPlusRewrite.Handlers.Menu
 {
     [HarmonyPatch]
     public static class VPlusSettingEditor
@@ -211,7 +212,7 @@ namespace ValheimPlusRewrite.Functions.Menu
                                         continue;
                                     }
 
-                                    if (prop.PropertyType == typeof(KeyCode))
+                                    if (prop.PropertyType == typeof(KeyCode) && (!ConfigSync.SyncRemote || Configuration.Current.Server.serverSyncHotkeys))
                                     {
                                         configdata[settingSection.Key][settingEntry.name.Replace("(Clone)", "")] = newVal;
                                         continue;
@@ -232,7 +233,7 @@ namespace ValheimPlusRewrite.Functions.Menu
                                     continue;
                                 }
 
-                                if (prop.PropertyType == typeof(KeyCode))
+                                if (prop.PropertyType == typeof(KeyCode) && (!ConfigSync.SyncRemote || Configuration.Current.Server.serverSyncHotkeys))
                                 {
                                     configdata[settingSection.Key][settingEntry.name.Replace("(Clone)", "")] = newVal;
                                     continue;

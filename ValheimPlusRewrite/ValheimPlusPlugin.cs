@@ -9,8 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ValheimPlusRewrite.Configurations;
 using ValheimPlusRewrite.Configurations.Helpers;
-using ValheimPlusRewrite.Functions.Menu;
-using ValheimPlusRewrite.Functions.Syncs;
+using ValheimPlusRewrite.Handlers.Menu;
+using ValheimPlusRewrite.Handlers.Syncs;
 using ValheimPlusRewrite.Handlers;
 
 namespace ValheimPlusRewrite
@@ -19,7 +19,6 @@ namespace ValheimPlusRewrite
     public class ValheimPlusPlugin : BaseUnityPlugin
     {
         public const string VERSION = "0.9.9.16";
-
         internal static System.Timers.Timer mapSyncSaveTimer = new System.Timers.Timer(TimeSpan.FromMinutes(5).TotalMilliseconds);
         private static Harmony harmony = new Harmony("mod.valheim_plus");
 
@@ -52,7 +51,7 @@ namespace ValheimPlusRewrite
                 }
 
                 //Map Sync Save Timer
-                if (ZNet.m_isServer && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+                if (ZNet.instance.IsServer() && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
                 {
                     mapSyncSaveTimer.AutoReset = true;
                     mapSyncSaveTimer.Elapsed += (sender, args) => MapSync.SaveMapDataToDisk();
@@ -62,7 +61,6 @@ namespace ValheimPlusRewrite
 
         public static void PatchAll()
         {
-            harmony.PatchAll(typeof(CompatibilityHandler));
             harmony.PatchAll();
         }
 

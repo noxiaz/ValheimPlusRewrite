@@ -3,17 +3,22 @@
     <Target Name="ILRepacker" AfterTargets="Build" Condition=" '$(Configuration)|$(Platform)' != 'API|AnyCPU' and '$(Configuration)|$(Platform)' != 'APIStub|AnyCPU' ">
         <ItemGroup>
             <InputAssemblies Include="$(TargetPath)"/>
-            <InputAssemblies Include="$(OutputPath)INIFileParser.dll"/>
-        </ItemGroup>
+			<InputAssemblies Include="$(OutputPath)INIFileParser.dll"/>
+			<!--<InputAssemblies Include="$(OutputPath)assembly_googleanalytics_publicized.dll"/>
+			<InputAssemblies Include="$(OutputPath)assembly_guiutils_publicized.dll"/>
+			<InputAssemblies Include="$(OutputPath)assembly_lux_publicized.dll"/>
+			<InputAssemblies Include="$(OutputPath)assembly_postprocessing_publicized.dll"/>
+			<InputAssemblies Include="$(OutputPath)assembly_simplemeshcombine_publicized.dll"/>
+			<InputAssemblies Include="$(OutputPath)assembly_steamworks_publicized.dll"/>
+			<InputAssemblies Include="$(OutputPath)assembly_sunshafts_publicized.dll"/>
+			<InputAssemblies Include="$(OutputPath)assembly_utils_publicized.dll"/>
+			<InputAssemblies Include="$(OutputPath)assembly_valheim_publicized.dll"/>-->
+		</ItemGroup>
         <ILRepack Parallel="true" DebugInfo="true" Internalize="true" InputAssemblies="@(InputAssemblies)" OutputFile="$(TargetPath)" TargetKind="SameAsPrimaryAssembly" LibraryPath="$(OutputPath)"/>
     </Target>
 	<Target Name="Copy" AfterTargets="ILRepack">
-		<Exec Command="copy /Y &quot;$(TargetDir)$(AssemblyName).dll&quot; &quot;$(ProjectDir)\..\..\Mods\$(AssemblyName).dll&quot;" />
-	</Target>
-	<Target Name="Copy" AfterTargets="ILRepack">
 		<Exec Command="copy /Y &quot;$(TargetDir)$(AssemblyName).dll&quot; &quot;$(GamePath)\Bepinex\plugins\&quot;" />
-	</Target>
-	<Target Name="Copy" AfterTargets="ILRepack">
+		<Exec Command="copy /Y &quot;$(TargetDir)$(AssemblyName).dll&quot; &quot;$(ProjectDir)\..\..\Mods\$(AssemblyName).dll&quot;" />
 		<Exec Command="
 if $(ConfigurationName) == Debug del &quot;$(TargetPath).mdb&quot;
 if $(ConfigurationName) == Debug del &quot;$(GamePath)\Bepinex\plugins\$(AssemblyName).dll&quot;

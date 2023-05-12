@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ValheimPlusRewrite.Functions.Syncs.Models
+namespace ValheimPlusRewrite.Handlers.Syncs.Models
 {
     internal class MapRangeModel
     {

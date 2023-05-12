@@ -8,11 +8,11 @@ using ValheimPlusRewrite.Configurations;
 
 namespace ValheimPlusRewrite.Handlers
 {
-    public static class CompatibilityHandler
+    [HarmonyPatch]
+    public static class VersionSync
     {
         private static System.Version version = new System.Version(ValheimPlusPlugin.VERSION);
         private static ZPackage serverVersion;
-
         private static readonly Dictionary<string, ZPackage> clientVersions = new Dictionary<string, ZPackage>();
 
 
@@ -102,7 +102,7 @@ namespace ValheimPlusRewrite.Handlers
             }
             else
             {
-                CompatibilityHandler.serverVersion = data;
+                VersionSync.serverVersion = data;
                 var serverVersion = ReadVersion(data);
                 var clientVersion = System.Version.Parse(ValheimPlusPlugin.VERSION);
                 ZLog.Log($"Client Version package - From: {sender.m_socket.GetEndPointString()} Version: {clientVersion} Server: {serverVersion}");

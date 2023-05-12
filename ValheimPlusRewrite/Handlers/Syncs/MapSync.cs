@@ -1,20 +1,138 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ValheimPlusRewrite.Functions.Syncs.Models;
+using UnityEngine;
+using ValheimPlusRewrite.Configurations;
+using ValheimPlusRewrite.Handlers.Syncs.Models;
+using ValheimPlusRewrite.GameClasses;
 using ValheimPlusRewrite.Utilities;
 using ValheimPlusRewrite.Utilities.Models;
 
-namespace ValheimPlusRewrite.Functions.Syncs
+namespace ValheimPlusRewrite.Handlers.Syncs
 {
+    [HarmonyPatch]
     public class MapSync
     {
-        public static bool[] ServerMapData;
+        private static bool[] serverMapData;
 
-        public static bool ShouldSyncOnSpawn = true;
+        public static bool ShouldSyncOnSpawn { get; set; } = true;
+
+
+        [HarmonyPatch(typeof(Game), nameof(Game.Start))]
+        [HarmonyPrefix]
+        private static void Game_Start_Patch()
+        {
+            ZRoutedRpc.instance.Register("VPlusMapSync", new Action<long, ZPackage>(RPC_VPlusMapSync));
+        }
+
+        [HarmonyPatch(typeof(ZNet), "RPC_RefPos")]
+        [HarmonyPostfix]
+        private static void ZNet_RPC_RefPos(ref ZNet __instance, ZRpc rpc, Vector3 pos, bool publicRefPos)
+        {
+            if (!__instance.IsServer()) return;
+
+            if (Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+            {
+                Minimap.instance.WorldToPixel(pos, out int pixelX, out int pixelY);
+                int radiusPixels = (int)Mathf.Ceil(Configuration.Current.Map.exploreRadius / Minimap.instance.m_pixelSize);
+
+                for (int y = pixelY - radiusPixels; y <= pixelY + radiusPixels; ++y)
+                {
+                    for (int x = pixelX - radiusPixels; x <= pixelX + radiusPixels; ++x)
+                    {
+                        if (x >= 0 && y >= 0 &&
+                            (x < Minimap.instance.m_textureSize && y < Minimap.instance.m_textureSize) &&
+                            ((double)new Vector2((float)(x - pixelX), (float)(y - pixelY)).magnitude <=
+                             (double)radiusPixels))
+                        {
+                            serverMapData[y * Minimap.instance.m_textureSize + x] = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Update exploration for all players
+        /// </summary>
+        [HarmonyPatch(typeof(Minimap), "UpdateExplore")]
+        [HarmonyPrefix]
+        private static void Minimap_UpdateExplore(ref float dt, ref Player player, ref Minimap __instance, ref float ___m_exploreTimer, ref float ___m_exploreInterval)
+        {
+            if (Configuration.Current.Map.exploreRadius > 10000) Configuration.Current.Map.exploreRadius = 10000;
+
+            if (!Configuration.Current.Map.IsEnabled) return;
+
+            if (Configuration.Current.Map.shareMapProgression)
+            {
+                float explorerTime = ___m_exploreTimer;
+                explorerTime += Time.deltaTime;
+                if (explorerTime > ___m_exploreInterval)
+                {
+                    if (ZNet.instance.m_players.Any())
+                    {
+                        foreach (ZNet.PlayerInfo m_Player in ZNet.instance.m_players)
+                        {
+                            MinimapHook.call_Explore(__instance, m_Player.m_position, Configuration.Current.Map.exploreRadius);
+                        }
+                    }
+                }
+            }
+
+            // Always reveal for your own, we do this non the less to apply the potentially bigger exploreRadius
+            MinimapHook.call_Explore(__instance, player.transform.position, Configuration.Current.Map.exploreRadius);
+        }
+
+        [HarmonyPatch(typeof(Minimap), "Awake")]
+        [HarmonyPostfix]
+        private static void Minimap_Awake()
+        {
+            if (ZNet.m_isServer && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+            {
+                //Init map array
+                serverMapData = new bool[Minimap.instance.m_textureSize * Minimap.instance.m_textureSize];
+
+                //Load map data from disk
+                LoadMapDataFromDisk();
+
+                //Start map data save timer
+                ValheimPlusPlugin.mapSyncSaveTimer.Start();
+            }
+        }
+
+        [HarmonyPatch(typeof(ZNet), "Shutdown")]
+        [HarmonyPostfix]
+        private static void ZNet_Shutdown(ref ZNet __instance)
+        {
+            //We left the server, so reset our map sync check.
+            if (Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+            {
+                if (!__instance.IsServer())
+                {
+                    ShouldSyncOnSpawn = true;
+                }
+                else
+                {
+                    SaveMapDataToDisk();
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Player), "OnSpawned")]
+        [HarmonyPrefix]
+        private static void Player_OnSpawned_Patch(ref Player __instance)
+        {
+            if (ShouldSyncOnSpawn && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+            {
+                //Send map data to the server
+                SendMapToServer();
+                ShouldSyncOnSpawn = false;
+            }
+        }
 
         public static void RPC_VPlusMapSync(long sender, ZPackage mapPkg)
         {
@@ -36,7 +154,7 @@ namespace ValheimPlusRewrite.Functions.Syncs
 
                         for (int x = exploredArea.StartingX; x < exploredArea.EndingX; x++)
                         {
-                            ServerMapData[exploredArea.Y * Minimap.instance.m_textureSize + x] = true;
+                            serverMapData[exploredArea.Y * Minimap.instance.m_textureSize + x] = true;
                         }
                     }
 
@@ -52,7 +170,7 @@ namespace ValheimPlusRewrite.Functions.Syncs
                 if (!lastMapPackage) return; //This package is one of many chunks, so don't update clients until we get all of them.
 
                 //Convert map data into ranges
-                List<MapRangeModel> serverExploredAreas = ExplorationDataToMapRanges(ServerMapData);
+                List<MapRangeModel> serverExploredAreas = ExplorationDataToMapRanges(serverMapData);
 
                 //Chunk up the map data
                 List<ZPackage> packages = ChunkMapData(serverExploredAreas);
@@ -155,7 +273,7 @@ namespace ValheimPlusRewrite.Functions.Syncs
         {
             //TODO: Optimize / Improve on disk format for exploration data. (JSON?)
 
-            if (ServerMapData == null) return;
+            if (serverMapData == null) return;
 
             //Load map data
             if (File.Exists(ValheimPlusPlugin.DataDirectoryPath +
@@ -174,7 +292,7 @@ namespace ValheimPlusRewrite.Functions.Syncs
                     {
                         if (int.TryParse(dataPoint, out int result))
                         {
-                            MapSync.ServerMapData[result] = true;
+                            serverMapData[result] = true;
                         }
                     }
 
@@ -192,7 +310,7 @@ namespace ValheimPlusRewrite.Functions.Syncs
         {
             //TODO: Optimize / Improve on disk format for exploration data. (JSON?)
 
-            if (ServerMapData == null) return;
+            if (serverMapData == null) return;
 
             List<int> mapDataToDisk = new List<int>();
 
@@ -200,7 +318,7 @@ namespace ValheimPlusRewrite.Functions.Syncs
             {
                 for (int x = 0; x < Minimap.instance.m_textureSize; ++x)
                 {
-                    if (ServerMapData[y * Minimap.instance.m_textureSize + x])
+                    if (serverMapData[y * Minimap.instance.m_textureSize + x])
                     {
                         mapDataToDisk.Add(y * Minimap.instance.m_textureSize + x);
                     }
