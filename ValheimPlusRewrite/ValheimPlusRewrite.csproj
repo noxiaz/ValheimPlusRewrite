@@ -326,6 +326,7 @@
   <ItemGroup>
     <Compile Include="Configurations\Abstracts\BaseConfig.cs" />
     <Compile Include="Configurations\Abstracts\ServerSyncConfig.cs" />
+    <Compile Include="Configurations\Attributes\ConfigHandler.cs" />
     <Compile Include="Configurations\Attributes\LoadingOption.cs" />
     <Compile Include="Configurations\Configuration.cs" />
     <Compile Include="Configurations\Enums\LoadingMode.cs" />
@@ -377,6 +378,7 @@
     <Compile Include="Configurations\Sections\WardConfiguration.cs" />
     <Compile Include="Configurations\Sections\WindmillConfiguration.cs" />
     <Compile Include="Configurations\Sections\WorkbenchConfiguration.cs" />
+    <Compile Include="Extensions\AssemblyExtentions.cs" />
     <Compile Include="Extensions\GameObjectExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ZNetExtensions.cs" />

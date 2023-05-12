@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ValheimPlusRewrite.Configurations;
+using ValheimPlusRewrite.Configurations.Attributes;
 using ValheimPlusRewrite.Configurations.Helpers;
+using ValheimPlusRewrite.Configurations.Sections;
 
 namespace ValheimPlusRewrite.Handlers.Syncs
 {
-    [HarmonyPatch]
+    [ConfigHandler(typeof(ServerConfiguration))]
     internal class ConfigSync
     {
         public static bool SyncRemote { get; private set; } = false;

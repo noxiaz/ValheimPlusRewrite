@@ -3,11 +3,13 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using ValheimPlusRewrite.Configurations;
+using ValheimPlusRewrite.Configurations.Attributes;
+using ValheimPlusRewrite.Configurations.Sections;
 using ValheimPlusRewrite.Utilities;
 
 namespace ValheimPlusRewrite.Handlers.Menu
 {
-    [HarmonyPatch]
+    [ConfigHandler(typeof(ValheimPlusConfiguration))]
     public static class VPlusMainLogo
     {
         public static Sprite VPlusLogoSprite;

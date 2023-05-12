@@ -11,11 +11,13 @@ using ValheimPlusRewrite.Handlers.Syncs.Models;
 using ValheimPlusRewrite.GameClasses;
 using ValheimPlusRewrite.Utilities;
 using ValheimPlusRewrite.Utilities.Models;
+using ValheimPlusRewrite.Configurations.Sections;
+using ValheimPlusRewrite.Configurations.Attributes;
 
 namespace ValheimPlusRewrite.Handlers.Syncs
 {
-    [HarmonyPatch]
-    public class MapSync
+    [ConfigHandler(typeof(MapConfiguration))]
+    public static class MapSync
     {
         private static bool[] serverMapData;
 

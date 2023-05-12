@@ -12,6 +12,9 @@ using ValheimPlusRewrite.Configurations.Helpers;
 using ValheimPlusRewrite.Handlers.Menu;
 using ValheimPlusRewrite.Handlers.Syncs;
 using ValheimPlusRewrite.Handlers;
+using System.Reflection;
+using ValheimPlusRewrite.Configurations.Attributes;
+using ValheimPlusRewrite.Configurations.Abstracts;
 
 namespace ValheimPlusRewrite
 {
@@ -62,6 +65,19 @@ namespace ValheimPlusRewrite
         public static void PatchAll()
         {
             harmony.PatchAll();
+            var classesToPatch = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypesWithAttribute(typeof(ConfigHandler)));
+            var configType = typeof(Configuration);
+            foreach (var item in classesToPatch)
+            {
+                var customAttribute = item.GetCustomAttribute<ConfigHandler>();
+                var targetType = customAttribute.TargetType;
+                var property = configType.GetProperties().FirstOrDefault(x => x.PropertyType == targetType);
+                var configurationSection = property?.GetValue(Configuration.Current) as BaseConfig;
+                if ((configurationSection?.IsEnabled).GetValueOrDefault())
+                {
+                    harmony.PatchAll(item);
+                }
+            }
         }
 
         public static void UnpatchSelf()

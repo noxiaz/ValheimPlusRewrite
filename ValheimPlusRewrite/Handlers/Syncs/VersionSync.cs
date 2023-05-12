@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ValheimPlusRewrite.Configurations;
+using ValheimPlusRewrite.Configurations.Attributes;
+using ValheimPlusRewrite.Configurations.Sections;
 
 namespace ValheimPlusRewrite.Handlers
 {
-    [HarmonyPatch]
+    [ConfigHandler(typeof(ServerConfiguration))]
     public static class VersionSync
     {
         private static System.Version version = new System.Version(ValheimPlusPlugin.VERSION);
