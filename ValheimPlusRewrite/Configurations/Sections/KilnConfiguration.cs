@@ -1,18 +1,19 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class KilnConfiguration : ServerSyncConfig
     {
-        public float productionSpeed { get; internal set; } = 15;
-        public int maximumWood { get; internal set; } = 25;
-        public bool dontProcessFineWood { get; internal set; } = false;
-        public bool dontProcessRoundLog { get; internal set; } = false;
-        public bool autoDeposit { get; internal set; } = false;
-        public bool autoFuel { get; internal set; } = false;
-        public int stopAutoFuelThreshold { get; internal set; } = 0;
-        public bool ignorePrivateAreaCheck { get; internal set; } = true;
-        public float autoRange { get; internal set; } = 10;
+        public ConfigModel<float> productionSpeed { get; internal set; } = 15;
+        public ConfigModel<int> MaximumWood { get; internal set; } = 25;
+        public ConfigModel<bool> DontProcessFineWood { get; internal set; } = false;
+        public ConfigModel<bool> DontProcessRoundLog { get; internal set; } = false;
+        public ConfigModel<bool> AutoDeposit { get; internal set; } = false;
+        public ConfigModel<bool> AutoFuel { get; internal set; } = false;
+        public ConfigModel<int> StopAutoFuelThreshold { get; internal set; } = 0;
+        public ConfigModel<bool> IgnorePrivateAreaCheck { get; internal set; } = true;
+        public ConfigModel<float> AutoRange { get; internal set; } = 10;
     }
 
 }

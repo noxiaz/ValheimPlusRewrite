@@ -1,14 +1,15 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class BeehiveConfiguration : ServerSyncConfig
     {
-        public float honeyProductionSpeed { get; internal set; } = 1200;
-        public int maximumHoneyPerBeehive { get; internal set; } = 4;
-        public bool autoDeposit { get; internal set; } = false;
-        public float autoDepositRange { get; internal set; } = 10;
-        public bool showDuration { get; internal set; } = false;
+        public ConfigModel<float> HoneyProductionSpeed { get; internal set; } = 1200;
+        public ConfigModel<int> MaximumHoneyPerBeehive { get; internal set; } = 4;
+        public ConfigModel<bool> AutoDeposit { get; internal set; } = false;
+        public ConfigModel<float> AutoDepositRange { get; internal set; } = 10;
+        public ConfigModel<bool> ShowDuration { get; internal set; } = false;
     }
 
 }

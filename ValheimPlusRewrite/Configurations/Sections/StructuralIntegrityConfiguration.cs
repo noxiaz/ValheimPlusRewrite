@@ -1,19 +1,20 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class StructuralIntegrityConfiguration : ServerSyncConfig
     {
-        public float wood { get; internal set; } = 0;
-        public float stone { get; internal set; } = 0;
-        public float iron { get; internal set; } = 0;
-        public float hardWood { get; internal set; } = 0;
-        public float marble { get; internal set; } = 0;
-        public bool disableStructuralIntegrity { get; internal set; } = false;
-        public bool disableDamageToPlayerStructures { get; internal set; } = false;
-        public bool disableDamageToPlayerBoats { get; internal set; } = false;
-        public bool disableDamageToPlayerCarts { get; internal set; } = false;
-        public bool disableWaterDamageToPlayerBoats { get; internal set; } = false;
-        public bool disableWaterDamageToPlayerCarts { get; internal set; } = false;
+        public ConfigModel<float> Wood { get; internal set; } = 0;
+        public ConfigModel<float> Stone { get; internal set; } = 0;
+        public ConfigModel<float> Iron { get; internal set; } = 0;
+        public ConfigModel<float> HardWood { get; internal set; } = 0;
+        public ConfigModel<float> Marble { get; internal set; } = 0;
+        public ConfigModel<bool> DisableStructuralIntegrity { get; internal set; } = false;
+        public ConfigModel<bool> DisableDamageToPlayerStructures { get; internal set; } = false;
+        public ConfigModel<bool> DisableDamageToPlayerBoats { get; internal set; } = false;
+        public ConfigModel<bool> DisableDamageToPlayerCarts { get; internal set; } = false;
+        public ConfigModel<bool> DisableWaterDamageToPlayerBoats { get; internal set; } = false;
+        public ConfigModel<bool> DisableWaterDamageToPlayerCarts { get; internal set; } = false;
     }
 }

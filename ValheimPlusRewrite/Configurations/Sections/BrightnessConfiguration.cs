@@ -1,4 +1,5 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
@@ -9,6 +10,6 @@ namespace ValheimPlusRewrite.Configurations.Sections
         public float dayBrightnessMultiplier { get; set; } = 0f;
         public float eveningBrightnessMultiplier { get; set; } = 0f;
         */
-        public float nightBrightnessMultiplier { get; set; } = 0f;
+        public ConfigModel<float> nightBrightnessMultiplier { get; set; } = 0f;
     }
 }

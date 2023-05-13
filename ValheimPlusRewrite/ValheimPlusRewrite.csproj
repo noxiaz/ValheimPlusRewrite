@@ -328,6 +328,7 @@
     <Compile Include="Configurations\Abstracts\ServerSyncConfig.cs" />
     <Compile Include="Configurations\Attributes\ConfigHandler.cs" />
     <Compile Include="Configurations\Attributes\LoadingOption.cs" />
+    <Compile Include="Configurations\Models\ConfigModel.cs" />
     <Compile Include="Configurations\Configuration.cs" />
     <Compile Include="Configurations\Enums\LoadingMode.cs" />
     <Compile Include="Configurations\Helpers\ConfigurationHelper.cs" />

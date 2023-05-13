@@ -66,7 +66,7 @@ namespace ValheimPlusRewrite.Handlers
             if (ZNet.instance.IsServerInstance())
             {
                 Log.LogInfo("Verify version - Clients: " + clientVersions.Count);
-                if (Configuration.Current.Server.IsEnabled && Configuration.Current.Server.enforceMod)
+                if (Configuration.Current.Server.IsEnabled && Configuration.Current.Server.EnforceMod)
                 {
                     if (!clientVersions.ContainsKey(rpc.GetSocket().GetEndPointString()))
                     {
@@ -93,7 +93,7 @@ namespace ValheimPlusRewrite.Handlers
                 var clientVersion = ReadVersion(data);
                 var serverVersion = System.Version.Parse(ValheimPlusPlugin.VERSION);
                 ZLog.Log($"Server Version package - From: {sender.m_socket.GetEndPointString()} Version: {clientVersion} Server: {serverVersion}");
-                if (Configuration.Current.Server.IsEnabled && Configuration.Current.Server.enforceMod)
+                if (Configuration.Current.Server.IsEnabled && Configuration.Current.Server.EnforceMod)
                 {
                     if (!clientVersion.Equals(serverVersion))
                     {

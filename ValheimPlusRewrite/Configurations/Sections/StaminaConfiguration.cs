@@ -1,16 +1,17 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class StaminaConfiguration : ServerSyncConfig
     {
-        public float dodgeStaminaUsage { get; internal set; } = 0;
-        public float encumberedStaminaDrain { get; internal set; } = 0;
-        public float jumpStaminaDrain { get; internal set; } = 0;
-        public float runStaminaDrain { get; internal set; } = 0;
-        public float sneakStaminaDrain { get; internal set; } = 0;
-        public float staminaRegen { get; internal set; } = 0;
-        public float staminaRegenDelay { get; internal set; } = 0;
-        public float swimStaminaDrain { get; internal set; } = 0;
+        public ConfigModel<float> DodgeStaminaUsage { get; internal set; } = 0;
+        public ConfigModel<float> EncumberedStaminaDrain { get; internal set; } = 0;
+        public ConfigModel<float> JumpStaminaDrain { get; internal set; } = 0;
+        public ConfigModel<float> RunStaminaDrain { get; internal set; } = 0;
+        public ConfigModel<float> SneakStaminaDrain { get; internal set; } = 0;
+        public ConfigModel<float> StaminaRegen { get; internal set; } = 0;
+        public ConfigModel<float> StaminaRegenDelay { get; internal set; } = 0;
+        public ConfigModel<float> SwimStaminaDrain { get; internal set; } = 0;
     }
 }

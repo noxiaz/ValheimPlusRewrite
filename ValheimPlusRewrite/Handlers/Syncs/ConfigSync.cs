@@ -30,7 +30,7 @@ namespace ValheimPlusRewrite.Handlers.Syncs
         {
             if (ZNet.instance.IsServer()) //Server
             {
-                if (!Configuration.Current.Server.IsEnabled || !Configuration.Current.Server.serverSyncsConfig) return;
+                if (!Configuration.Current.Server.IsEnabled || !Configuration.Current.Server.ServerSyncsConfig) return;
 
                 ZPackage pkg = new ZPackage();
                 string[] rawConfigData = File.ReadAllLines(ConfigurationHelper.Path);

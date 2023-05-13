@@ -212,7 +212,7 @@ namespace ValheimPlusRewrite.Handlers.Menu
                                         continue;
                                     }
 
-                                    if (prop.PropertyType == typeof(KeyCode) && (!ConfigSync.SyncRemote || Configuration.Current.Server.serverSyncHotkeys))
+                                    if (prop.PropertyType == typeof(KeyCode) && (!ConfigSync.SyncRemote || Configuration.Current.Server.ServerSyncHotkeys))
                                     {
                                         configdata[settingSection.Key][settingEntry.name.Replace("(Clone)", "")] = newVal;
                                         continue;
@@ -233,7 +233,7 @@ namespace ValheimPlusRewrite.Handlers.Menu
                                     continue;
                                 }
 
-                                if (prop.PropertyType == typeof(KeyCode) && (!ConfigSync.SyncRemote || Configuration.Current.Server.serverSyncHotkeys))
+                                if (prop.PropertyType == typeof(KeyCode) && (!ConfigSync.SyncRemote || Configuration.Current.Server.ServerSyncHotkeys))
                                 {
                                     configdata[settingSection.Key][settingEntry.name.Replace("(Clone)", "")] = newVal;
                                     continue;
@@ -366,5 +366,4 @@ namespace ValheimPlusRewrite.Handlers.Menu
             modSettingsPanel.SetActive(true);
         }
     }
-
 }

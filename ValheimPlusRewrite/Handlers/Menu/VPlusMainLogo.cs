@@ -25,7 +25,7 @@ namespace ValheimPlusRewrite.Handlers.Menu
         [HarmonyPostfix]
         public static void FejdStartup_SetupGui_Patch(ref FejdStartup __instance)
         {
-            if (Configuration.Current.ValheimPlus.IsEnabled && Configuration.Current.ValheimPlus.mainMenuLogo)
+            if (Configuration.Current.ValheimPlus.IsEnabled && Configuration.Current.ValheimPlus.MainMenuLogo)
             {
                 Log.LogInfo("Going to load logo");
                 GameObject logo = GameObject.Find("LOGO");

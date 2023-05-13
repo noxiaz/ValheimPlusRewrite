@@ -54,7 +54,7 @@ namespace ValheimPlusRewrite
                 }
 
                 //Map Sync Save Timer
-                if (ZNet.instance.IsServer() && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+                if (ZNet.instance.IsServer())// && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
                 {
                     mapSyncSaveTimer.AutoReset = true;
                     mapSyncSaveTimer.Elapsed += (sender, args) => MapSync.SaveMapDataToDisk();

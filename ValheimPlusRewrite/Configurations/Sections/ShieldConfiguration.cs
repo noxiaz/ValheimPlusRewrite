@@ -1,9 +1,10 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class ShieldConfiguration : ServerSyncConfig
     {
-        public float blockRating { get; internal set; } = 0;
+        public ConfigModel<float> BlockRating { get; internal set; } = 0;
     }
 }

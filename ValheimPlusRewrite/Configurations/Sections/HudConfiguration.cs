@@ -1,12 +1,13 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class HudConfiguration : BaseConfig
     {
-        public bool showRequiredItems { get; internal set; } = false;
-        public bool experienceGainedNotifications { get; internal set; } = false;
-        public bool removeDamageFlash { get; internal set; } = false;
-        public int displayBowAmmoCounts { get; internal set; } = 0;
+        public ConfigModel<bool> ShowRequiredItems { get; internal set; } = false;
+        public ConfigModel<bool> ExperienceGainedNotifications { get; internal set; } = false;
+        public ConfigModel<bool> RemoveDamageFlash { get; internal set; } = false;
+        public ConfigModel<int> DisplayBowAmmoCounts { get; internal set; } = 0;
     }
 }

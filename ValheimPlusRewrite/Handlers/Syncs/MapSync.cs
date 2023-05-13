@@ -37,10 +37,10 @@ namespace ValheimPlusRewrite.Handlers.Syncs
         {
             if (!__instance.IsServer()) return;
 
-            if (Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+            if (Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
             {
                 Minimap.instance.WorldToPixel(pos, out int pixelX, out int pixelY);
-                int radiusPixels = (int)Mathf.Ceil(Configuration.Current.Map.exploreRadius / Minimap.instance.m_pixelSize);
+                int radiusPixels = (int)Mathf.Ceil(Configuration.Current.Map.ExploreRadius / Minimap.instance.m_pixelSize);
 
                 for (int y = pixelY - radiusPixels; y <= pixelY + radiusPixels; ++y)
                 {
@@ -65,11 +65,11 @@ namespace ValheimPlusRewrite.Handlers.Syncs
         [HarmonyPrefix]
         private static void Minimap_UpdateExplore(ref float dt, ref Player player, ref Minimap __instance, ref float ___m_exploreTimer, ref float ___m_exploreInterval)
         {
-            if (Configuration.Current.Map.exploreRadius > 10000) Configuration.Current.Map.exploreRadius = 10000;
+            if (Configuration.Current.Map.ExploreRadius > 10000) Configuration.Current.Map.ExploreRadius = 10000;
 
             if (!Configuration.Current.Map.IsEnabled) return;
 
-            if (Configuration.Current.Map.shareMapProgression)
+            if (Configuration.Current.Map.ShareMapProgression)
             {
                 float explorerTime = ___m_exploreTimer;
                 explorerTime += Time.deltaTime;
@@ -79,21 +79,21 @@ namespace ValheimPlusRewrite.Handlers.Syncs
                     {
                         foreach (ZNet.PlayerInfo m_Player in ZNet.instance.m_players)
                         {
-                            MinimapHook.call_Explore(__instance, m_Player.m_position, Configuration.Current.Map.exploreRadius);
+                            MinimapHook.call_Explore(__instance, m_Player.m_position, Configuration.Current.Map.ExploreRadius);
                         }
                     }
                 }
             }
 
             // Always reveal for your own, we do this non the less to apply the potentially bigger exploreRadius
-            MinimapHook.call_Explore(__instance, player.transform.position, Configuration.Current.Map.exploreRadius);
+            MinimapHook.call_Explore(__instance, player.transform.position, Configuration.Current.Map.ExploreRadius);
         }
 
         [HarmonyPatch(typeof(Minimap), "Awake")]
         [HarmonyPostfix]
         private static void Minimap_Awake()
         {
-            if (ZNet.m_isServer && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+            if (ZNet.m_isServer && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
             {
                 //Init map array
                 serverMapData = new bool[Minimap.instance.m_textureSize * Minimap.instance.m_textureSize];
@@ -111,7 +111,7 @@ namespace ValheimPlusRewrite.Handlers.Syncs
         private static void ZNet_Shutdown(ref ZNet __instance)
         {
             //We left the server, so reset our map sync check.
-            if (Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+            if (Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
             {
                 if (!__instance.IsServer())
                 {
@@ -128,7 +128,7 @@ namespace ValheimPlusRewrite.Handlers.Syncs
         [HarmonyPrefix]
         private static void Player_OnSpawned_Patch(ref Player __instance)
         {
-            if (ShouldSyncOnSpawn && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.shareMapProgression)
+            if (ShouldSyncOnSpawn && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
             {
                 //Send map data to the server
                 SendMapToServer();

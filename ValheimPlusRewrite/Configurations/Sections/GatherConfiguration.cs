@@ -1,19 +1,20 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class GatherConfiguration : ServerSyncConfig
     {
-        public float wood { get; internal set; } = 0;
-        public float stone { get; internal set; } = 0;
-        public float fineWood { get; internal set; } = 0;
-        public float coreWood { get; internal set; } = 0;
-        public float elderBark { get; internal set; } = 0;
-        public float ironScrap { get; internal set; } = 0;
-        public float tinOre { get; internal set; } = 0;
-        public float copperOre { get; internal set; } = 0;
-        public float silverOre { get; internal set; } = 0;
-        public float chitin { get; internal set; } = 0;
-        public float dropChance { get; internal set; } = 0;
+        public ConfigModel<float> Wood { get; internal set; } = 0;
+        public ConfigModel<float> Stone { get; internal set; } = 0;
+        public ConfigModel<float> FineWood { get; internal set; } = 0;
+        public ConfigModel<float> CoreWood { get; internal set; } = 0;
+        public ConfigModel<float> ElderBark { get; internal set; } = 0;
+        public ConfigModel<float> IronScrap { get; internal set; } = 0;
+        public ConfigModel<float> TinOre { get; internal set; } = 0;
+        public ConfigModel<float> CopperOre { get; internal set; } = 0;
+        public ConfigModel<float> SilverOre { get; internal set; } = 0;
+        public ConfigModel<float> Chitin { get; internal set; } = 0;
+        public ConfigModel<float> DropChance { get; internal set; } = 0;
     }
 }

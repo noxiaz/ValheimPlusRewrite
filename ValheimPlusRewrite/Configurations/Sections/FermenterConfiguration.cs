@@ -1,16 +1,17 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class FermenterConfiguration : ServerSyncConfig
     {
-        public float fermenterDuration { get; internal set; } = 2400;
-        public int fermenterItemsProduced { get; internal set; } = 4;
-        public bool showDuration { get; internal set; } = false;
-        public bool autoDeposit { get; internal set; } = false;
-        public bool autoFuel { get; internal set; } = false;
-        public bool ignorePrivateAreaCheck { get; internal set; } = false;
-        public float autoRange { get; internal set; } = 10;
+        public ConfigModel<float> FermenterDuration { get; internal set; } = 2400;
+        public ConfigModel<int> FermenterItemsProduced { get; internal set; } = 4;
+        public ConfigModel<bool> ShowDuration { get; internal set; } = false;
+        public ConfigModel<bool> AutoDeposit { get; internal set; } = false;
+        public ConfigModel<bool> AutoFuel { get; internal set; } = false;
+        public ConfigModel<bool> IgnorePrivateAreaCheck { get; internal set; } = false;
+        public ConfigModel<float> AutoRange { get; internal set; } = 10;
     }
 
 }

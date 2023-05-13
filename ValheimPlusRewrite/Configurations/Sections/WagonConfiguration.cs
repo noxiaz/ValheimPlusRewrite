@@ -1,10 +1,11 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class WagonConfiguration : ServerSyncConfig
     {
-        public float wagonExtraMassFromItems { get; internal set; } = 0;
-        public float wagonBaseMass { get; internal set; } = 20;
+        public ConfigModel<float> WagonExtraMassFromItems { get; internal set; } = 0;
+        public ConfigModel<float> WagonBaseMass { get; internal set; } = 20;
     }
 }

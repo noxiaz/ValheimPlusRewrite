@@ -1,14 +1,16 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
+
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class WindmillConfiguration : ServerSyncConfig
     {
-        public int maximumBarley { get; internal set; } = 50;
-        public float productionSpeed { get; internal set; } = 10;
-        public bool ignoreWindIntensity { get; internal set; } = false;
-        public bool autoDeposit { get; internal set; } = false;
-        public bool autoFuel { get; internal set; } = false;
-        public bool ignorePrivateAreaCheck { get; internal set; } = true;
-        public float autoRange { get; internal set; } = 10;
+        public ConfigModel<int> MaximumBarley { get; internal set; } = 50;
+        public ConfigModel<float> ProductionSpeed { get; internal set; } = 10;
+        public ConfigModel<bool> IgnoreWindIntensity { get; internal set; } = false;
+        public ConfigModel<bool> AutoDeposit { get; internal set; } = false;
+        public ConfigModel<bool> AutoFuel { get; internal set; } = false;
+        public ConfigModel<bool> IgnorePrivateAreaCheck { get; internal set; } = true;
+        public ConfigModel<float> AutoRange { get; internal set; } = 10;
     }
 }

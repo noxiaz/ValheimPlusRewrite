@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class AdvancedBuildingModeConfiguration : BaseConfig
     {
-        public KeyCode enterAdvancedBuildingMode { get; internal set; } = KeyCode.F1;
-        public KeyCode exitAdvancedBuildingMode { get; internal set; } = KeyCode.F3;
+        public ConfigModel<KeyCode> EnterAdvancedBuildingMode { get; internal set; } = KeyCode.F1;
+        public ConfigModel<KeyCode> ExitAdvancedBuildingMode { get; internal set; } = KeyCode.F3;
 
-        public KeyCode copyObjectRotation { get; internal set; } = KeyCode.Keypad7;
-        public KeyCode pasteObjectRotation { get; internal set; } = KeyCode.Keypad8;
+        public ConfigModel<KeyCode> CopyObjectRotation { get; internal set; } = KeyCode.Keypad7;
+        public ConfigModel<KeyCode> PasteObjectRotation { get; internal set; } = KeyCode.Keypad8;
 
-        public KeyCode increaseScrollSpeed { get; internal set; } = KeyCode.KeypadPlus;
-        public KeyCode decreaseScrollSpeed { get; internal set; } = KeyCode.KeypadMinus;
+        public ConfigModel<KeyCode> IncreaseScrollSpeed { get; internal set; } = KeyCode.KeypadPlus;
+        public ConfigModel<KeyCode> DecreaseScrollSpeed { get; internal set; } = KeyCode.KeypadMinus;
     }
 }

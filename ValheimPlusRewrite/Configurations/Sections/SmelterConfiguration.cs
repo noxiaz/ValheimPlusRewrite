@@ -1,17 +1,18 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class SmelterConfiguration : ServerSyncConfig
     {
-        public int maximumOre { get; internal set; } = 10;
-        public int maximumCoal { get; internal set; } = 20;
-        public int coalUsedPerProduct { get; internal set; } = 2;
-        public float productionSpeed { get; internal set; } = 30;
-        public bool autoDeposit { get; internal set; } = false;
-        public bool autoFuel { get; internal set; } = false;
-        public bool ignorePrivateAreaCheck { get; internal set; } = true;
-        public float autoRange { get; internal set; } = 10;
+        public ConfigModel<int> MaximumOre { get; internal set; } = 10;
+        public ConfigModel<int> MaximumCoal { get; internal set; } = 20;
+        public ConfigModel<int> CoalUsedPerProduct { get; internal set; } = 2;
+        public ConfigModel<float> ProductionSpeed { get; internal set; } = 30;
+        public ConfigModel<bool> AutoDeposit { get; internal set; } = false;
+        public ConfigModel<bool> AutoFuel { get; internal set; } = false;
+        public ConfigModel<bool> IgnorePrivateAreaCheck { get; internal set; } = true;
+        public ConfigModel<float> AutoRange { get; internal set; } = 10;
     }
 
 }

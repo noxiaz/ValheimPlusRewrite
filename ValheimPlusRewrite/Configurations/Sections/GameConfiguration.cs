@@ -1,17 +1,18 @@
 ﻿using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Models;
 
 namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class GameConfiguration : ServerSyncConfig
     {
-        public float gameDifficultyDamageScale { get; internal set; } = 4f;
-        public float gameDifficultyHealthScale { get; internal set; } = 30f;
-        public int extraPlayerCountNearby { get; internal set; } = 0;
-        public int setFixedPlayerCountTo { get; internal set; } = 0;
-        public int difficultyScaleRange { get; internal set; } = 200;
-        public bool disablePortals { get; internal set; } = false;
-        public bool disableConsole { get; internal set; } = false;
-        public bool bigPortalNames { get; internal set; } = false;
-        public bool disableFog { get; internal set; } = false;
+        public ConfigModel<float> GameDifficultyDamageScale { get; internal set; } = 4f;
+        public ConfigModel<float> GameDifficultyHealthScale { get; internal set; } = 30f;
+        public ConfigModel<int> ExtraPlayerCountNearby { get; internal set; } = 0;
+        public ConfigModel<int> SetFixedPlayerCountTo { get; internal set; } = 0;
+        public ConfigModel<int> DifficultyScaleRange { get; internal set; } = 200;
+        public ConfigModel<bool> DisablePortals { get; internal set; } = false;
+        public ConfigModel<bool> DisableConsole { get; internal set; } = false;
+        public ConfigModel<bool> BigPortalNames { get; internal set; } = false;
+        public ConfigModel<bool> DisableFog { get; internal set; } = false;
     }
 }

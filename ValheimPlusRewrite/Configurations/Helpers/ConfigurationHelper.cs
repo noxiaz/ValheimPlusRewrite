@@ -113,19 +113,37 @@ namespace ValheimPlusRewrite.Configurations.Helpers
 
         private static void SetConfiguration(Type classType, object instance, string keyName, object keyValue)
         {
-            Log.LogDebug($"Configuration - Section: {classType.Name} Key: {keyName} Value: {keyValue}");
+            keyName = Char.ToUpper(keyName[0]) + keyName.Substring(1);
             PropertyInfo propertyInfo = classType.GetProperty(keyName);
-            object value;
-            if (propertyInfo.PropertyType == typeof(UnityEngine.KeyCode))
+            if (propertyInfo == null)
             {
-                value = (KeyCode)System.Enum.Parse(typeof(KeyCode), keyValue as string);
+                Log.LogError($"Configuration Wrong PropertyName - Section: {classType.Name} Key: {keyName} Value: {keyValue}");
+            }
+            else
+            {
+                Log.LogDebug($"Configuration - Section: {classType.Name} Key: {keyName} Value: {keyValue}");
+                var model = propertyInfo.GetValue(instance);
+                var valueProperty = model.GetType().GetProperty("Value");
+                var genericType = propertyInfo.PropertyType.GenericTypeArguments[0];
+                var value = ConvertValueType(keyValue, genericType);
+                valueProperty.SetValue(model, Convert.ChangeType(value, genericType), null);
+                propertyInfo.SetValue(instance, model, null);
+            }
+        }
+
+        private static object ConvertValueType(object keyValue, Type type)
+        {
+            object value;
+            if (type == typeof(KeyCode))
+            {
+                value = (KeyCode)Enum.Parse(typeof(KeyCode), keyValue as string);
             }
             else
             {
                 value = keyValue;
             }
 
-            propertyInfo.SetValue(instance, Convert.ChangeType(value, propertyInfo.PropertyType), null);
+            return value;
         }
 
         private static StreamReader StringToStream(string s)
@@ -141,7 +159,7 @@ namespace ValheimPlusRewrite.Configurations.Helpers
         private static void GenerateConfigFile()
         {
             Log.LogInfo($"Going to generate config file at: '{Path}'");
-            using (var stream = EmbeddedAsset.LoadEmbeddedAsset("valheim_plus.cfg")) 
+            using (var stream = EmbeddedAsset.LoadEmbeddedAsset("valheim_plus.cfg"))
             using (var fileStream = File.Create(Path))
             {
                 stream.Seek(0, SeekOrigin.Begin);
