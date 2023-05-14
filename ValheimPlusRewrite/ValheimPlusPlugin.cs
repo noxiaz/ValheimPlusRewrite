@@ -77,13 +77,23 @@ namespace ValheimPlusRewrite
                         var isDefault = (bool)propertyValue.GetPropertyValue("IsDefault");
                         if (!isDefault)
                         {
+                            Log.LogDebug($"Patching - Name: {item.Name}");
                             harmony.PatchAll(item);
+                        }
+                        else
+                        {
+                            Log.LogDebug($"Patching stopped - Name: {item.Name} Property: {customAttribute.PropertyName} - Property has default value");
                         }
                     }
                     else
                     {
+                        Log.LogDebug($"Patching - Name: {item.Name}");
                         harmony.PatchAll(item);
                     }
+                }
+                else
+                {
+                    Log.LogDebug($"Patching stopped - Name: {item.Name} - Section not enabled");
                 }
             }
         }

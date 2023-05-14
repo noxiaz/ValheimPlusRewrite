@@ -187,12 +187,16 @@
     <Compile Include="Configurations\Sections\WindmillConfiguration.cs" />
     <Compile Include="Configurations\Sections\WorkbenchConfiguration.cs" />
     <Compile Include="Extensions\AssemblyExtentions.cs" />
+    <Compile Include="Extensions\FloatExtensions.cs" />
     <Compile Include="Extensions\GameObjectExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\ZNetExtensions.cs" />
     <Compile Include="Extensions\ZPackageExtensions.cs" />
-    <Compile Include="Handlers\Hud\BowAmmo.cs" />
+    <Compile Include="Handlers\Huds\BowAmmo.cs" />
+    <Compile Include="Handlers\Huds\DamageFlash.cs" />
+    <Compile Include="Handlers\Huds\ExperienceGainedNotification.cs" />
+    <Compile Include="Handlers\Huds\RequiredItems.cs" />
     <Compile Include="Handlers\Menu\VPlusSettingEditor.cs" />
     <Compile Include="Handlers\Syncs\ConfigSync.cs" />
     <Compile Include="Handlers\Syncs\MapSync.cs" />
@@ -202,6 +206,7 @@
     <Compile Include="Log.cs" />
     <Compile Include="Handlers\Menu\VPlusMainLogo.cs" />
     <Compile Include="Utilities\EmbeddedAsset.cs" />
+    <Compile Include="Utilities\Helper.cs" />
     <Compile Include="Utilities\Models\RpcDataModel.cs" />
     <Compile Include="Utilities\RpcQueue.cs" />
     <Compile Include="ValheimPlusPlugin.cs" />

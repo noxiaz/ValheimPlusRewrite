@@ -10,7 +10,7 @@ using ValheimPlusRewrite.Configurations;
 using ValheimPlusRewrite.Configurations.Attributes;
 using ValheimPlusRewrite.Configurations.Sections;
 
-namespace ValheimPlusRewrite.Handlers.Hud
+namespace ValheimPlusRewrite.Handlers.Huds
 {
     [ConfigHandler(typeof(HudConfiguration), nameof(HudConfiguration.DisplayBowAmmoCounts))]
     internal static class BowAmmo
