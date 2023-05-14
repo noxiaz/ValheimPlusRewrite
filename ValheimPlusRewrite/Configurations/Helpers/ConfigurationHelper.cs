@@ -39,7 +39,6 @@ namespace ValheimPlusRewrite.Configurations.Helpers
                 Log.LogError($"Could not load config file: {ex}");
                 return false;
             }
-
         }
 
         /// <summary>
@@ -119,7 +118,7 @@ namespace ValheimPlusRewrite.Configurations.Helpers
             {
                 Log.LogError($"Configuration Wrong PropertyName - Section: {classType.Name} Key: {keyName} Value: {keyValue}");
             }
-            else
+            else if (propertyInfo.PropertyType.IsGenericType)
             {
                 Log.LogDebug($"Configuration - Section: {classType.Name} Key: {keyName} Value: {keyValue}");
                 var model = propertyInfo.GetValue(instance);
@@ -128,6 +127,11 @@ namespace ValheimPlusRewrite.Configurations.Helpers
                 var value = ConvertValueType(keyValue, genericType);
                 valueProperty.SetValue(model, Convert.ChangeType(value, genericType), null);
                 propertyInfo.SetValue(instance, model, null);
+            }
+            else
+            {
+                var value = ConvertValueType(keyValue, propertyInfo.PropertyType);
+                propertyInfo.SetValue(instance, Convert.ChangeType(value, propertyInfo.PropertyType), null);
             }
         }
 

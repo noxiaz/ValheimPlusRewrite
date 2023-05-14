@@ -13,7 +13,7 @@ namespace ValheimPlusRewrite.Handlers
     [ConfigHandler(typeof(ServerConfiguration))]
     public static class VersionSync
     {
-        private static System.Version version = new System.Version(ValheimPlusPlugin.VERSION);
+        private static System.Version version = new System.Version(ValheimPlusPlugin.PLUGIN_VERSION);
         private static ZPackage serverVersion;
         private static readonly Dictionary<string, ZPackage> clientVersions = new Dictionary<string, ZPackage>();
 
@@ -91,7 +91,7 @@ namespace ValheimPlusRewrite.Handlers
             {
                 clientVersions[sender.m_socket.GetEndPointString()] = data;
                 var clientVersion = ReadVersion(data);
-                var serverVersion = System.Version.Parse(ValheimPlusPlugin.VERSION);
+                var serverVersion = System.Version.Parse(ValheimPlusPlugin.PLUGIN_VERSION);
                 ZLog.Log($"Server Version package - From: {sender.m_socket.GetEndPointString()} Version: {clientVersion} Server: {serverVersion}");
                 if (Configuration.Current.Server.IsEnabled && Configuration.Current.Server.EnforceMod)
                 {
@@ -106,7 +106,7 @@ namespace ValheimPlusRewrite.Handlers
             {
                 VersionSync.serverVersion = data;
                 var serverVersion = ReadVersion(data);
-                var clientVersion = System.Version.Parse(ValheimPlusPlugin.VERSION);
+                var clientVersion = System.Version.Parse(ValheimPlusPlugin.PLUGIN_VERSION);
                 ZLog.Log($"Client Version package - From: {sender.m_socket.GetEndPointString()} Version: {clientVersion} Server: {serverVersion}");
             }
         }

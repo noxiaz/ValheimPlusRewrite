@@ -16,9 +16,10 @@ using ValheimPlusRewrite.Configurations.Attributes;
 
 namespace ValheimPlusRewrite.Handlers.Syncs
 {
-    [ConfigHandler(typeof(MapConfiguration))]
+    [ConfigHandler(typeof(MapConfiguration), nameof(MapConfiguration.ShareMapProgression))]
     public static class MapSync
     {
+        internal static System.Timers.Timer mapSyncSaveTimer = new System.Timers.Timer(TimeSpan.FromMinutes(5).TotalMilliseconds);
         private static bool[] serverMapData;
 
         public static bool ShouldSyncOnSpawn { get; set; } = true;
@@ -28,6 +29,14 @@ namespace ValheimPlusRewrite.Handlers.Syncs
         [HarmonyPrefix]
         private static void Game_Start_Patch()
         {
+            //Map Sync Save Timer
+            if (ZNet.instance.IsServer() && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
+            {
+                Log.LogDebug("Configure Map Sync Timer");
+                mapSyncSaveTimer.AutoReset = true;
+                mapSyncSaveTimer.Elapsed += (sender, args) => MapSync.SaveMapDataToDisk();
+            }
+
             ZRoutedRpc.instance.Register("VPlusMapSync", new Action<long, ZPackage>(RPC_VPlusMapSync));
         }
 
@@ -102,7 +111,7 @@ namespace ValheimPlusRewrite.Handlers.Syncs
                 LoadMapDataFromDisk();
 
                 //Start map data save timer
-                ValheimPlusPlugin.mapSyncSaveTimer.Start();
+                mapSyncSaveTimer.Start();
             }
         }
 

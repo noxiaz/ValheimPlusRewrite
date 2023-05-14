@@ -18,17 +18,18 @@ using ValheimPlusRewrite.Configurations.Abstracts;
 
 namespace ValheimPlusRewrite
 {
-    [BepInPlugin("org.bepinex.plugins.valheim_plus", "Valheim Plus", VERSION)]
+    [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
     public class ValheimPlusPlugin : BaseUnityPlugin
     {
-        public const string VERSION = "0.9.9.16";
-        internal static System.Timers.Timer mapSyncSaveTimer = new System.Timers.Timer(TimeSpan.FromMinutes(5).TotalMilliseconds);
-        private static Harmony harmony = new Harmony("mod.valheim_plus");
+        internal const string PLUGIN_NAME = "Valheim Plus";
+        internal const string PLUGIN_GUID = "mod.valheim_plus";
+        internal const string PLUGIN_VERSION = "0.9.9.16";
+        private static Harmony harmony = new Harmony(PLUGIN_GUID);
 
         internal static string DataDirectoryPath { get; private set; } = Path.Combine(Paths.BepInExRootPath, "vplus-data");
         internal static ValheimPlusPlugin Instance { get; private set; }
 
-        void Awake()
+        private void Awake()
         {
             Instance = this;
             Log.Initialize(base.Logger);
@@ -38,6 +39,8 @@ namespace ValheimPlusRewrite
                 Log.LogDebug(item.Key);
             }
 
+
+
             Log.LogInfo("Trying to load the configuration file");
             if (ConfigurationHelper.LoadSettings() != true)
             {
@@ -46,19 +49,12 @@ namespace ValheimPlusRewrite
             else
             {
                 Log.LogInfo("Configuration file loaded succesfully.");
-                PatchAll();
-
                 if (!Directory.Exists(DataDirectoryPath))
                 {
                     Directory.CreateDirectory(DataDirectoryPath);
                 }
 
-                //Map Sync Save Timer
-                if (ZNet.instance.IsServer())// && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
-                {
-                    mapSyncSaveTimer.AutoReset = true;
-                    mapSyncSaveTimer.Elapsed += (sender, args) => MapSync.SaveMapDataToDisk();
-                }
+                PatchAll();
             }
         }
 
@@ -71,16 +67,33 @@ namespace ValheimPlusRewrite
             {
                 var customAttribute = item.GetCustomAttribute<ConfigHandler>();
                 var targetType = customAttribute.TargetType;
-                var property = configType.GetProperties().FirstOrDefault(x => x.PropertyType == targetType);
-                var configurationSection = property?.GetValue(Configuration.Current) as BaseConfig;
+                var settingProperty = configType.GetProperties().FirstOrDefault(x => x.PropertyType == targetType);
+                var configurationSection = settingProperty?.GetValue(Configuration.Current) as BaseConfig;
                 if ((configurationSection?.IsEnabled).GetValueOrDefault())
                 {
-                    harmony.PatchAll(item);
+                    if (customAttribute.PropertyName != null)
+                    {
+                        var propertyValue = configurationSection.GetPropertyValue(customAttribute.PropertyName);
+                        var isDefault = (bool)propertyValue.GetPropertyValue("IsDefault");
+                        if (!isDefault)
+                        {
+                            harmony.PatchAll(item);
+                        }
+                    }
+                    else
+                    {
+                        harmony.PatchAll(item);
+                    }
                 }
             }
         }
 
         public static void UnpatchSelf()
+        {
+            harmony.UnpatchSelf();
+        }
+
+        private void OnDestroy()
         {
             harmony.UnpatchSelf();
         }

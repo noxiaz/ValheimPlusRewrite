@@ -9,10 +9,18 @@ namespace ValheimPlusRewrite.Configurations.Attributes
 {
     public class ConfigHandler : Attribute
     {
-        public Type TargetType { get; set; }
+        public Type TargetType { get; private set; }
+        public string PropertyName { get; private set; }
+
         public ConfigHandler(Type type)
         {
             TargetType = type;
+        }
+
+        public ConfigHandler(Type type, string propertyName)
+        {
+            TargetType = type;
+            PropertyName = propertyName;
         }
     }
 }
