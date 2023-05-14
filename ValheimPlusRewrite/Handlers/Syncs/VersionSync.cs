@@ -11,7 +11,7 @@ using ValheimPlusRewrite.Configurations.Sections;
 namespace ValheimPlusRewrite.Handlers
 {
     [ConfigHandler(typeof(ServerConfiguration))]
-    public static class VersionSync
+    internal static class VersionSync
     {
         private static System.Version version = new System.Version(ValheimPlusPlugin.PLUGIN_VERSION);
         private static ZPackage serverVersion;

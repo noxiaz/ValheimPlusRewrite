@@ -17,7 +17,7 @@ using ValheimPlusRewrite.Configurations.Attributes;
 namespace ValheimPlusRewrite.Handlers.Syncs
 {
     [ConfigHandler(typeof(MapConfiguration), nameof(MapConfiguration.ShareMapProgression))]
-    public static class MapSync
+    internal static class MapSync
     {
         internal static System.Timers.Timer mapSyncSaveTimer = new System.Timers.Timer(TimeSpan.FromMinutes(5).TotalMilliseconds);
         private static bool[] serverMapData;

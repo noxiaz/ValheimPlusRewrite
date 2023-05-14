@@ -14,7 +14,7 @@ using ValheimPlusRewrite.Configurations.Sections;
 namespace ValheimPlusRewrite.Handlers.Syncs
 {
     [ConfigHandler(typeof(ServerConfiguration))]
-    internal class ConfigSync
+    internal static class ConfigSync
     {
         public static bool SyncRemote { get; private set; } = false;
 
