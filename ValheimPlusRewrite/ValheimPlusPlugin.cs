@@ -39,8 +39,6 @@ namespace ValheimPlusRewrite
                 Log.LogDebug(item.Key);
             }
 
-
-
             Log.LogInfo("Trying to load the configuration file");
             if (ConfigurationHelper.LoadSettings() != true)
             {
