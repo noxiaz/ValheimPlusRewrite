@@ -5,7 +5,7 @@ namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class KilnConfiguration : ServerSyncConfig
     {
-        public ConfigModel<float> productionSpeed { get; internal set; } = 15;
+        public ConfigModel<float> ProductionSpeed { get; internal set; } = 15;
         public ConfigModel<int> MaximumWood { get; internal set; } = 25;
         public ConfigModel<bool> DontProcessFineWood { get; internal set; } = false;
         public ConfigModel<bool> DontProcessRoundLog { get; internal set; } = false;

@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <Choose>
     <When Condition="($(OS) == 'Unix' OR $(OS) == 'OSX') AND $(GamePath) == ''">
       <PropertyGroup>
@@ -129,6 +132,14 @@
     <Reference Include="UnityEngine.ImageConversionModule">
       <HintPath>$(GamePath)\unstripped_corlib\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Physics2DModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(GamePath)\unstripped_corlib\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(GamePath)\unstripped_corlib\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configurations\Abstracts\BaseConfig.cs" />
@@ -191,8 +202,12 @@
     <Compile Include="Extensions\GameObjectExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\PlayerExtensions.cs" />
     <Compile Include="Extensions\ZNetExtensions.cs" />
     <Compile Include="Extensions\ZPackageExtensions.cs" />
+    <Compile Include="Handlers\AdvancedModes\AdvancedBuildingMode.cs" />
+    <Compile Include="Handlers\AdvancedModes\AdvancedEditingMode.cs" />
+    <Compile Include="Handlers\AdvancedModes\AdvancedModeBase.cs" />
     <Compile Include="Handlers\Huds\BowAmmo.cs" />
     <Compile Include="Handlers\Huds\DamageFlash.cs" />
     <Compile Include="Handlers\Huds\ExperienceGainedNotification.cs" />

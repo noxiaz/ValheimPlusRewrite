@@ -28,6 +28,6 @@ namespace ValheimPlusRewrite.Configurations.Sections
         public ConfigModel<float> MaxFallDamage { get; internal set; } = 100;
         public ConfigModel<bool> SkipTutorials { get; internal set; } = false;
         public ConfigModel<bool> DisableEncumbered { get; internal set; } = false;
-        public ConfigModel<bool> DutoPickUpWhenEncumbered { get; internal set; } = false;
+        public ConfigModel<bool> AutoPickUpWhenEncumbered { get; internal set; } = false;
     }
 }
