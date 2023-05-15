@@ -144,6 +144,7 @@
   <ItemGroup>
     <Compile Include="Configurations\Abstracts\BaseConfig.cs" />
     <Compile Include="Configurations\Abstracts\ServerSyncConfig.cs" />
+    <Compile Include="Configurations\Attributes\ConfigDescription.cs" />
     <Compile Include="Configurations\Attributes\ConfigHandler.cs" />
     <Compile Include="Configurations\Attributes\LoadingOption.cs" />
     <Compile Include="Configurations\Models\ConfigModel.cs" />
