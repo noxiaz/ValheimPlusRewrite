@@ -7,7 +7,8 @@ namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class DurabilityConfiguration : ServerSyncConfig
     {
-        [ConfigDescription("Each of these values increase or reduce the durability of the specific item type by %. - The value 50 will increase the durability from 100 to 150. The value -50 will reduce the durability from 100 to 50.")]
+        [ConfigDescription("Each of these values increase or reduce the durability of the specific item type by %.")]
+        [ConfigDescription("The value 50 will increase the durability from 100 to 150. The value -50 will reduce the durability from 100 to 50.")]
         public ConfigModel<float> Axes { get; internal set; } = 0;
         [ConfigDescription("")]
         public ConfigModel<float> Pickaxes { get; internal set; } = 0;

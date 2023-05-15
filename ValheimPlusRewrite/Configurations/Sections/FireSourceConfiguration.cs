@@ -7,7 +7,8 @@ namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class FireSourceConfiguration : ServerSyncConfig
     {
-        [ConfigDescription("If set to true, torch-type fire sources will stay at max fuel level once filled. - Applies to: wood torches, iron torches, green torches, sconces and brazier.")]
+        [ConfigDescription("If set to true, torch-type fire sources will stay at max fuel level once filled.")]
+        [ConfigDescription("Applies to: wood torches, iron torches, green torches, sconces and brazier.")]
         public ConfigModel<bool> Torches { get; internal set; } = false;
         [ConfigDescription("If set to true, non torch-type fire sources will stay at max fuel level once filled.")]
         public ConfigModel<bool> Fires { get; internal set; } = false;

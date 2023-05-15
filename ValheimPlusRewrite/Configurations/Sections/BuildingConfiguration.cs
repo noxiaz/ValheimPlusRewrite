@@ -23,7 +23,8 @@ namespace ValheimPlusRewrite.Configurations.Sections
         public ConfigModel<bool> AlwaysDropExcludedResources { get; internal set; } = false;
         [ConfigDescription("Setting this to true will cause repairing with the hammer to repair in a radius instead of a single piece.")]
         public ConfigModel<bool> EnableAreaRepair { get; internal set; } = false;
-        [ConfigDescription("Sets the area repair radius of enableAreaRepair. A value of 7.5 would mean your repair radius is 7.5 meters. - Requires enableAreaRepair=true")]
+        [ConfigDescription("Sets the area repair radius of enableAreaRepair. A value of 7.5 would mean your repair radius is 7.5 meters.")]
+        [ConfigDescription("Requires enableAreaRepair=true")]
         public ConfigModel<float> AreaRepairRadius { get; internal set; } = 7.5f;
     }
 }

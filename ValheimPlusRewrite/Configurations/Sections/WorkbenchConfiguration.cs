@@ -9,7 +9,8 @@ namespace ValheimPlusRewrite.Configurations.Sections
     {
         [ConfigDescription("Set the workbench radius in meters.")] 
         public ConfigModel<float> WorkbenchRange { get; internal set; } = 20;
-        [ConfigDescription("Set the enemy spawn radius around workbenches in meters - This value equals workbenchRange if its set to 0.")] 
+        [ConfigDescription("Set the enemy spawn radius around workbenches in meters - This value equals workbenchRange if its set to 0.")]
+        [ConfigDescription("This value equals workbenchRange if its set to 0.")]
         public ConfigModel<float> WorkbenchEnemySpawnRange { get; internal set; } = 0;
         [ConfigDescription("Sets the workbench attachment (e.g. anvil) radius.")] 
         public ConfigModel<float> WorkbenchAttachmentRange { get; internal set; } = 5.0f;
