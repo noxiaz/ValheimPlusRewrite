@@ -3,9 +3,13 @@ using IniParser;
 using IniParser.Model;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using ValheimPlusRewrite.Configurations.Abstracts;
+using ValheimPlusRewrite.Configurations.Attributes;
 using ValheimPlusRewrite.Utilities;
 
 namespace ValheimPlusRewrite.Configurations.Helpers
@@ -13,7 +17,53 @@ namespace ValheimPlusRewrite.Configurations.Helpers
     public static class ConfigurationHelper
     {
         public static object ConfigManagerFile { get; internal set; }
-        public static string Path { get; private set; } = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Paths.BepInExConfigPath), "valheim_plus.cfg");
+        public static string Path { get; set; }
+
+        public static void SaveSettings()
+        {
+            var stringBuilder = new StringBuilder();
+            var configuration = Configuration.Current;
+            var configurationType = configuration.GetType();
+            foreach (var configurationProperty in configurationType.GetProperties(BindingFlags.Instance | BindingFlags.Public).OrderBy(x => x.Name))
+            {
+                stringBuilder.AppendLine($"[{configurationProperty.Name}]");
+                stringBuilder.AppendLine("");
+                var configurationPropertyValue = configuration.GetPropertyValue(configurationProperty.Name);
+                if (configurationPropertyValue == null)
+                {
+                    continue;
+                }
+
+                var setttingClass = configurationPropertyValue.GetType();
+                var sectionDescriptions = setttingClass.GetCustomAttributes<ConfigDescription>();
+                foreach (var description in sectionDescriptions)
+                {
+                    stringBuilder.AppendLine($"; {description.Description}");
+                }
+
+                var baseSetting = configurationPropertyValue as BaseConfig;
+                stringBuilder.AppendLine($"; Change false to true to enable this section, if you set this to false the mode will not be accessible.");
+                stringBuilder.AppendLine($"Enabled = {baseSetting.IsEnabled}");
+                stringBuilder.AppendLine("");
+                foreach (var property in setttingClass.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly))
+                {
+                    var propertyValue = configurationPropertyValue.GetPropertyValue(property.Name);
+                    var propertyDescriptions = property.GetCustomAttributes<ConfigDescription>();
+                    foreach (var description in propertyDescriptions)
+                    {
+                        if (!string.IsNullOrEmpty(description.Description))
+                        {
+                            stringBuilder.AppendLine($"; {description.Description}");
+                        }
+                    }
+
+                    stringBuilder.AppendLine($"{property.Name} = {propertyValue.GetPropertyValue("Value")}");
+                    stringBuilder.AppendLine("");
+                }
+            }
+
+            File.WriteAllText(Path, stringBuilder.ToString());
+        }
 
         /// <summary>
         /// Loading settings from configuration file
@@ -25,14 +75,18 @@ namespace ValheimPlusRewrite.Configurations.Helpers
             {
                 if (!File.Exists(Path))
                 {
+                    Log.LogInfo($"Loading default configuration - Missing File");
                     GenerateConfigFile();
+                    return true;
                 }
-
-                Log.LogInfo($"Loading config file at: '{Path}'");
-                FileIniDataParser parser = new FileIniDataParser();
-                IniData configdata = parser.ReadFile(Path);
-                Configuration.Current = ReadFromFile(Path);
-                return true;
+                else
+                {
+                    Log.LogInfo($"Loading config file at: '{Path}'");
+                    FileIniDataParser parser = new FileIniDataParser();
+                    IniData configdata = parser.ReadFile(Path);
+                    Configuration.Current = ReadFromFile(Path);
+                    return true;
+                }
             }
             catch (Exception ex)
             {
@@ -76,6 +130,21 @@ namespace ValheimPlusRewrite.Configurations.Helpers
             }
 
             return ParseIni<Configuration>(data);
+        }
+
+        public static Configuration DefaultConfigurtation()
+        {
+            var configuration = new Configuration();
+            var configurationType = configuration.GetType();
+            foreach (var configurationProperty in configurationType.GetProperties(BindingFlags.Instance | BindingFlags.Public).OrderBy(x => x.Name))
+            {
+                var classInfo = configurationType.GetProperty(configurationProperty.Name);
+                var classType = classInfo.PropertyType;
+                var instance = Activator.CreateInstance(classType);
+                classInfo.SetValue(configuration, instance);
+            }
+
+            return configuration;
         }
 
         private static T ParseIni<T>(IniData iniData) where T : new()
@@ -162,13 +231,8 @@ namespace ValheimPlusRewrite.Configurations.Helpers
 
         private static void GenerateConfigFile()
         {
-            Log.LogInfo($"Going to generate config file at: '{Path}'");
-            using (var stream = EmbeddedAsset.LoadEmbeddedAsset("valheim_plus.cfg"))
-            using (var fileStream = File.Create(Path))
-            {
-                stream.Seek(0, SeekOrigin.Begin);
-                stream.CopyTo(fileStream);
-            }
+            Configuration.Current = DefaultConfigurtation();
+            SaveSettings();
         }
     }
 }

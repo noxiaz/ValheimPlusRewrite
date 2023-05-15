@@ -31,6 +31,7 @@ namespace ValheimPlusRewrite.Configurations.Sections
         [LoadingOption(LoadingMode.LocalOnly)]
         [ConfigDescription("If false allows you to keep your own defined hotkeys instead of synchronising the ones declared for the server.")]
         public ConfigModel<bool> ServerSyncHotkeys { get; internal set; } = false;
+        public override bool IsEnabled { get; set; } = true;
     }
 
 }

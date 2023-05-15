@@ -9,5 +9,7 @@ namespace ValheimPlusRewrite.Configurations.Sections
     {
         [ConfigDescription("Display the Valheim Plus logo in the main menu")]
         public ConfigModel<bool> MainMenuLogo { get; internal set; } = true;
+
+        public override bool IsEnabled { set; get; } = true;
     }
 }

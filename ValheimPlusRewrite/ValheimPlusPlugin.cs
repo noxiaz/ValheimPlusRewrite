@@ -40,6 +40,7 @@ namespace ValheimPlusRewrite
             }
 
             Log.LogInfo("Trying to load the configuration file");
+            ConfigurationHelper.Path = Path.Combine(Path.GetDirectoryName(Paths.BepInExConfigPath), "valheim_plus.cfg");
             if (ConfigurationHelper.LoadSettings() != true)
             {
                 Log.LogError("Error while loading configuration file.");

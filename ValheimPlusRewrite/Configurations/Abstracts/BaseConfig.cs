@@ -14,7 +14,7 @@ namespace ValheimPlusRewrite.Configurations.Abstracts
     public abstract class BaseConfig
     {
         [LoadingOption(LoadingMode.Never)]
-        public bool IsEnabled { get; set; } = false;
+        public virtual bool IsEnabled { get; set; } = false;
 
         [LoadingOption(LoadingMode.Never)]
         public virtual bool NeedsServerSync { get; set; } = false;

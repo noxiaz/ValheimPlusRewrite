@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ValheimPlusRewrite.Configurations.Attributes
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
-    internal class ConfigDescription : Attribute
+    public class ConfigDescription : Attribute
     {
         public string Description { get; set; } 
         public ConfigDescription(string description)
