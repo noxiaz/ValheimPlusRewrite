@@ -15,7 +15,7 @@ namespace ValheimPlusRewrite.Handlers.Huds
     {
         [HarmonyPatch(typeof(Skills), nameof(Skills.RaiseSkill))]
         [HarmonyPostfix]
-        private static void Skills_RaiseSkill_Patch(Skills __instance, Skills.SkillType skillType, float factor = 1f)
+        private static void Skills_RaiseSkill_Postfix(Skills __instance, Skills.SkillType skillType, float factor = 1f)
         {
             if (Configuration.Current.Hud.IsEnabled && Configuration.Current.Hud.ExperienceGainedNotifications && skillType != Skills.SkillType.None)
             {

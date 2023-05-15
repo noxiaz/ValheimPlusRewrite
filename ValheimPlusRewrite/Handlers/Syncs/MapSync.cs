@@ -27,7 +27,7 @@ namespace ValheimPlusRewrite.Handlers.Syncs
 
         [HarmonyPatch(typeof(Game), nameof(Game.Start))]
         [HarmonyPrefix]
-        private static void Game_Start_Patch()
+        private static void Game_Start_Prefix()
         {
             //Map Sync Save Timer
             if (ZNet.instance.IsServer() && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
@@ -40,9 +40,9 @@ namespace ValheimPlusRewrite.Handlers.Syncs
             ZRoutedRpc.instance.Register("VPlusMapSync", new Action<long, ZPackage>(RPC_VPlusMapSync));
         }
 
-        [HarmonyPatch(typeof(ZNet), "RPC_RefPos")]
+        [HarmonyPatch(typeof(ZNet), nameof(ZNet.RPC_RefPos))]
         [HarmonyPostfix]
-        private static void ZNet_RPC_RefPos(ref ZNet __instance, ZRpc rpc, Vector3 pos, bool publicRefPos)
+        private static void ZNet_RPC_RefPos_Postfix(ref ZNet __instance, ZRpc rpc, Vector3 pos, bool publicRefPos)
         {
             if (!__instance.IsServer()) return;
 
@@ -70,9 +70,9 @@ namespace ValheimPlusRewrite.Handlers.Syncs
         /// <summary>
         /// Update exploration for all players
         /// </summary>
-        [HarmonyPatch(typeof(Minimap), "UpdateExplore")]
+        [HarmonyPatch(typeof(Minimap), nameof(Minimap.UpdateExplore))]
         [HarmonyPrefix]
-        private static void Minimap_UpdateExplore(ref float dt, ref Player player, ref Minimap __instance, ref float ___m_exploreTimer, ref float ___m_exploreInterval)
+        private static void Minimap_UpdateExplore_Prefix(ref float dt, ref Player player, ref Minimap __instance, ref float ___m_exploreTimer, ref float ___m_exploreInterval)
         {
             if (Configuration.Current.Map.ExploreRadius > 10000) Configuration.Current.Map.ExploreRadius = 10000;
 
@@ -98,9 +98,9 @@ namespace ValheimPlusRewrite.Handlers.Syncs
             MinimapHook.call_Explore(__instance, player.transform.position, Configuration.Current.Map.ExploreRadius);
         }
 
-        [HarmonyPatch(typeof(Minimap), "Awake")]
+        [HarmonyPatch(typeof(Minimap), nameof(Minimap.Awake))]
         [HarmonyPostfix]
-        private static void Minimap_Awake()
+        private static void Minimap_Awake_Postfix()
         {
             if (ZNet.m_isServer && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
             {
@@ -115,9 +115,9 @@ namespace ValheimPlusRewrite.Handlers.Syncs
             }
         }
 
-        [HarmonyPatch(typeof(ZNet), "Shutdown")]
+        [HarmonyPatch(typeof(ZNet), nameof(ZNet.Shutdown))]
         [HarmonyPostfix]
-        private static void ZNet_Shutdown(ref ZNet __instance)
+        private static void ZNet_Shutdown_Postfix(ref ZNet __instance)
         {
             //We left the server, so reset our map sync check.
             if (Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
@@ -133,9 +133,9 @@ namespace ValheimPlusRewrite.Handlers.Syncs
             }
         }
 
-        [HarmonyPatch(typeof(Player), "OnSpawned")]
+        [HarmonyPatch(typeof(Player), nameof(Player.OnSpawned))]
         [HarmonyPrefix]
-        private static void Player_OnSpawned_Patch(ref Player __instance)
+        private static void Player_OnSpawned_Prefix(ref Player __instance)
         {
             if (ShouldSyncOnSpawn && Configuration.Current.Map.IsEnabled && Configuration.Current.Map.ShareMapProgression)
             {

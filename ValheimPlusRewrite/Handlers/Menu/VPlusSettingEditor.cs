@@ -39,9 +39,9 @@ namespace ValheimPlusRewrite.Handlers.Menu
         private static List<string> availableSettings;
         static Transform newStart = null;
 
-        [HarmonyPatch(typeof(FejdStartup), "Update")]
+        [HarmonyPatch(typeof(FejdStartup), nameof(FejdStartup.Update))]
         [HarmonyPostfix]
-        public static void FejdStartup_SetupGui_Patch(ref GameObject ___m_mainMenu, ref GameObject ___m_settingsPrefab)
+        public static void FejdStartup_SetupGui_Postfix(ref GameObject ___m_mainMenu, ref GameObject ___m_settingsPrefab)
         {
             if (Input.GetKeyDown(KeyCode.F10))
             {

@@ -14,16 +14,16 @@ namespace ValheimPlusRewrite.Handlers.Menu
     {
         public static Sprite VPlusLogoSprite;
 
-        [HarmonyPatch(typeof(FejdStartup), "Awake")]
+        [HarmonyPatch(typeof(FejdStartup), nameof(FejdStartup.Awake))]
         [HarmonyPostfix]
-        public static void FejdStartup_Awake_Patch()
+        public static void FejdStartup_Awake_Postfix()
         {
             Load();
         }
 
-        [HarmonyPatch(typeof(FejdStartup), "SetupGui")]
+        [HarmonyPatch(typeof(FejdStartup), nameof(FejdStartup.SetupGui))]
         [HarmonyPostfix]
-        public static void FejdStartup_SetupGui_Patch(ref FejdStartup __instance)
+        public static void FejdStartup_SetupGui_Postfix(ref FejdStartup __instance)
         {
             if (Configuration.Current.ValheimPlus.IsEnabled && Configuration.Current.ValheimPlus.MainMenuLogo)
             {

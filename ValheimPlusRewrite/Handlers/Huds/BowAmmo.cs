@@ -21,7 +21,7 @@ namespace ValheimPlusRewrite.Handlers.Huds
 
         [HarmonyPatch(typeof(HotkeyBar), nameof(HotkeyBar.UpdateIcons))]
         [HarmonyPostfix]
-        private static void HotkeyBar_UpdateIcons_Patch(ref HotkeyBar __instance, ref Player player)
+        private static void HotkeyBar_UpdateIcons_Postfix(ref HotkeyBar __instance, ref Player player)
         {
             if (Configuration.Current.Hud.IsEnabled && Configuration.Current.Hud.DisplayBowAmmoCounts > 0)
             {

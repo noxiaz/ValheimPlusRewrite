@@ -208,6 +208,8 @@
     <Compile Include="Handlers\AdvancedModes\AdvancedBuildingMode.cs" />
     <Compile Include="Handlers\AdvancedModes\AdvancedEditingMode.cs" />
     <Compile Include="Handlers\AdvancedModes\AdvancedModeBase.cs" />
+    <Compile Include="Handlers\Armors\ArmorHandler.cs" />
+    <Compile Include="Handlers\Beds\BedHandler.cs" />
     <Compile Include="Handlers\Huds\BowAmmo.cs" />
     <Compile Include="Handlers\Huds\DamageFlash.cs" />
     <Compile Include="Handlers\Huds\ExperienceGainedNotification.cs" />

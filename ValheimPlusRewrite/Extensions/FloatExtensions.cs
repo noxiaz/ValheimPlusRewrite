@@ -14,5 +14,23 @@ namespace ValheimPlusRewrite
             double result = Math.Truncate(mult * value) / mult;
             return (float)result;
         }
+
+        public static float ApplyProcentage(this float targetValue, float procentage)
+        {
+            if (procentage <= -100)
+                procentage = -100;
+
+            float newValue;
+            if (procentage >= 0)
+            {
+                newValue = targetValue + ((targetValue / 100) * procentage);
+            }
+            else
+            {
+                newValue = targetValue - ((targetValue / 100) * (procentage * -1));
+            }
+
+            return newValue;
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace ValheimPlusRewrite.Handlers.Huds
     {
         [HarmonyPatch(typeof(InventoryGui), nameof(InventoryGui.SetupRequirement))]
         [HarmonyPrefix]
-        private static bool InventoryGui_SetupRequirement_Patch(Transform elementRoot, Piece.Requirement req, Player player, bool craft, int quality, ref bool __result)
+        private static bool InventoryGui_SetupRequirement_Prefix(Transform elementRoot, Piece.Requirement req, Player player, bool craft, int quality, ref bool __result)
         {
             if (!Configuration.Current.Hud.IsEnabled || !Configuration.Current.Hud.ShowRequiredItems)
             {

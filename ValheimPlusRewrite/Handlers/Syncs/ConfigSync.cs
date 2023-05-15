@@ -21,7 +21,7 @@ namespace ValheimPlusRewrite.Handlers.Syncs
 
         [HarmonyPatch(typeof(Game), nameof(Game.Start))]
         [HarmonyPrefix]
-        private static void Game_Start_Patch()
+        private static void Game_Start_Prefix()
         {
             ZRoutedRpc.instance.Register("VPlusConfigSync", new Action<long, ZPackage>(RPC_VPlusConfigSync));   
         }

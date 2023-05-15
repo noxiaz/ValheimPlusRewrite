@@ -10,45 +10,44 @@ using ValheimPlusRewrite.Configurations.Sections;
 
 namespace ValheimPlusRewrite.Handlers
 {
-    [ConfigHandler(typeof(ServerConfiguration))]
+    [ConfigHandler(typeof(ServerConfiguration), nameof(ServerConfiguration.EnforceMod))]
     internal static class VersionSync
     {
         private static System.Version version = new System.Version(ValheimPlusPlugin.PLUGIN_VERSION);
         private static ZPackage serverVersion;
         private static readonly Dictionary<string, ZPackage> clientVersions = new Dictionary<string, ZPackage>();
 
-
-        [HarmonyPatch(typeof(ZNet), "OnNewConnection")]
+        [HarmonyPatch(typeof(ZNet), nameof(ZNet.OnNewConnection))]
         [HarmonyPrefix]
         [HarmonyPriority(800)]
-        private static void ZNet_OnNewConnection(ZNet __instance, ZNetPeer peer)
+        private static void ZNet_OnNewConnection_Prefix(ZNet __instance, ZNetPeer peer)
         {
             serverVersion = null;
             peer.m_rpc.Register<ZPackage>("RPC_VP_ReceiveVersionData", RPC_VP_ReceiveVersionData);
         }
 
-        [HarmonyPatch(typeof(ZNet), "RPC_ClientHandshake")]
+        [HarmonyPatch(typeof(ZNet), nameof(ZNet.RPC_ClientHandshake))]
         [HarmonyPrefix]
         [HarmonyPriority(800)]
-        private static void ZNet_RPC_ClientHandshake(ZNet __instance, ZRpc rpc)
+        private static void ZNet_RPC_ClientHandshake_Prefix(ZNet __instance, ZRpc rpc)
         {
             var zPackage = VersionToZPackage(version);
             rpc.Invoke("RPC_VP_ReceiveVersionData", zPackage);
         }
 
-        [HarmonyPatch(typeof(ZNet), "RPC_ServerHandshake")]
+        [HarmonyPatch(typeof(ZNet), nameof(ZNet.RPC_ServerHandshake))]
         [HarmonyPrefix]
         [HarmonyPriority(800)]
-        private static void ZNet_RPC_ServerHandshake(ZNet __instance, ZRpc rpc)
+        private static void ZNet_RPC_ServerHandshake_Prefix(ZNet __instance, ZRpc rpc)
         {
             var zPackage = VersionToZPackage(version);
             rpc.Invoke("RPC_VP_ReceiveVersionData", zPackage);
         }
 
-        [HarmonyPatch(typeof(ZNet), "SendPeerInfo")]
+        [HarmonyPatch(typeof(ZNet), nameof(ZNet.SendPeerInfo))]
         [HarmonyPrefix]
         [HarmonyPriority(800)]
-        private static bool ZNet_SendPeerInfo(ZNet __instance, ZRpc rpc, string password)
+        private static bool ZNet_SendPeerInfo_Prefix(ZNet __instance, ZRpc rpc, string password)
         {
             if (ZNet.instance.IsClientInstance() && serverVersion == null)
             {
@@ -58,10 +57,10 @@ namespace ValheimPlusRewrite.Handlers
             return true;
         }
 
-        [HarmonyPatch(typeof(ZNet), "RPC_PeerInfo")]
+        [HarmonyPatch(typeof(ZNet), nameof(ZNet.RPC_PeerInfo))]
         [HarmonyPrefix]
         [HarmonyPriority(800)]
-        private static bool ZNet_RPC_PeerInfo(ZNet __instance, ZRpc rpc, ZPackage pkg)
+        private static bool ZNet_RPC_PeerInfo_Prefix(ZNet __instance, ZRpc rpc, ZPackage pkg)
         {
             if (ZNet.instance.IsServerInstance())
             {

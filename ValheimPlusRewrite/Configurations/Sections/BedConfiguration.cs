@@ -6,7 +6,7 @@ namespace ValheimPlusRewrite.Configurations.Sections
 {
     public class BedConfiguration : BaseConfig
     {
-        public ConfigModel<bool> sleepWithoutSpawn { get; set; } = false;
-        public ConfigModel<bool> unclaimedBedsOnly { get; set; } = false;
+        public ConfigModel<bool> SleepWithoutSpawn { get; set; } = false;
+        public ConfigModel<bool> UnclaimedBedsOnly { get; set; } = false;
     }
 }

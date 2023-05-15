@@ -14,9 +14,9 @@ namespace ValheimPlusRewrite.Handlers.Huds
     [ConfigHandler(typeof(HudConfiguration), nameof(HudConfiguration.RemoveDamageFlash))]
     internal static class DamageFlash
     {
-        [HarmonyPatch(typeof(Hud), "DamageFlash")]
+        [HarmonyPatch(typeof(Hud), nameof(Hud.DamageFlash))]
         [HarmonyPostfix]
-        private static void Hud_DamageFlash_Patch(Hud __instance)
+        private static void Hud_DamageFlash_Postfix(Hud __instance)
         {
             if (Configuration.Current.Hud.IsEnabled && Configuration.Current.Hud.RemoveDamageFlash)
             {
